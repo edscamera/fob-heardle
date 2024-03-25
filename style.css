@@ -1,0 +1,99 @@
+body {
+    background-color: #111;
+    color: #fff;
+    
+    margin: 0;
+}
+#header {
+    background-color: #111;
+    border-bottom: 1px solid #fff;
+
+    padding: 1em;
+    text-align: center;
+    font-size: 2em;
+}
+#guesses {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    gap: 1em;
+    padding: 1em;
+}
+#guesses > div {
+    border: 1px solid #aaa;
+    background-color: #111;
+
+    min-width: 80%;
+    height: 3em;
+
+    transition: .25s ease-in-out;
+}
+#guesses > div.active {
+    border: 1px solid #fff;
+}
+#footer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+
+    padding-bottom: 1em;
+
+    background-color: #111;
+    border-top: 1px solid #aaa;
+
+    text-align: center;
+    font-size: 2em;
+}
+
+#slider-container {
+    height: 10px;
+
+    margin: 0 10%;
+
+    display: flex;
+    position: relative;
+}
+#slider-container > span:nth-child(1) {
+    border-left: 1px solid #aaa;
+}
+#slider-container > span {
+    height: 100%;
+    border-right: 1px solid #aaa;
+    transition: .25s ease-in-out;
+}
+#slider-container > span.active {
+    background-color: #444;
+}
+#slider {
+    width: 10%;
+    height: 100%;
+    background-color: #080;
+    
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.divider {
+    border-bottom: 1px solid #aaa;
+}
+#player {
+    margin: 1em 10%;
+    display: flex;
+    align-items: center;
+
+    font-size: initial;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#player > div { flex: 1; }
+
+button {
+    background-color: #111;
+    border: 1px solid #fff;
+    border-radius: 100%;
+    padding: 1em;
+    color: #fff;
+
+    width: 4em;
+    aspect-ratio: 1;
+}
