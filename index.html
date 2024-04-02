@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heardle | Fall Out Boy</title>
+    <title>Heardle</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://w.soundcloud.com/player/api.js"></script>
-    <script src="./heardle.js"></script>
+    <script src="./config.js"></script>
+    <script src="./heardle.js" defer></script>
 </head>
 <body>
-    <div id="header">Title</div>
-    <div id="guesses">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+    <h3 id="header">Title</h3>
+    <div id="guesses" class="game"></div>
+    <div class="end" style="text-align: center; margin: 1em;">
+        <h4>
+            The song was <span id="songTitle"></span>.
+        </h4>
     </div>
     <div id="footer">
         <div id="slider-container">
@@ -28,17 +27,30 @@
             <span style="flex: 6;"></span>
             <div id="slider"></div>
         </div>
-        <div class="divider"></div>
-        <div id="player">
-            <span>0:00</span>
-            <div>
-                <button>&#9654</button>
+        <div id="footer-fit">
+            <div id="player">
+                <span id="timestamp">0:00</span>
+                <div>
+                    <button id="btnPlay">▶</button>
+                </div>
+                <span>0:16</span>
             </div>
-            <span>0:16</span>
+            <div id="input" class="game">
+                <div id="autocomplete"></div>
+                <input type="text" id="textbox" placeholder="Search for a song...">
+            </div>
+            <div class="game">
+                <button id="btnSkip">SKIP (+1s)</button>
+                <div style="flex-grow: 1;"></div>
+                <button id="btnSubmit">SUBMIT</button>
+            </div>
         </div>
     </div>
-    <!--
-    <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1423520482&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
-    -->
+
+    <iframe class="hidden" id="soundcloud" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+
+    <div id="loading">
+        <span>Loading...</span>
+    </div>
 </body>
 </html>
