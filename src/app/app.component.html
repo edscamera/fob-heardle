@@ -1,0 +1,61 @@
+<div id="header">
+  {{artistName}} Heardle
+</div>
+@if (!won) {
+  <div id="guesses" class="fit">
+    @for (guess of guesses; track $index) {
+      <div [class.active]="$index === getCurrentGuess()">
+        @if (guess) {
+          <span>{{getEmoji(guess)}}</span> {{guess.skipped ? "Skipped" : guess.guess}}
+        }
+      </div>
+    }
+  </div>
+}
+@else {
+  <div class="fit" [style.text-align]="'center'">
+    <h1>The song was {{song?.title}}.</h1>
+    <h3>You got it in {{tries + 1}} tr{{tries + 1 === 1 ? "y" : "ies"}}.</h3>
+  </div>
+}
+<div id="footer">
+  <div id="track-container">
+    <div class="fit">
+      @for (guess of guessMap; track $index) {
+        @if (getCurrentGuess() >= $index) {
+          <div class="behind" [style.width]="(100 * guess / guessMap[guessMap.length - 1]) + '%'"></div>
+        }
+      }
+      <div id="track" #track></div>
+      @for (guess of guessMap; track $index) {
+        <div class="border" [style.width]="(100 * guess / guessMap[guessMap.length - 1]) + '%'"></div>
+      }
+    </div>
+  </div>
+  <div id="footerFit" class="fit">
+    <div id="player">
+      <span>0:00</span>
+      <button (click)="togglePlayer()">{{!playing ? "▶" : "⏹"}}</button>
+      <span>0:16</span>
+    </div>
+    @if (!won) {
+      <div id="inputContainer" (blur)="autocompleteVisible = false">
+        @if (autocompleteVisible) {
+          <div id="autocomplete">
+            @for (option of autocompletes; track $index) {
+              <div (click)="input = option">{{option}}</div>
+            }
+          </div>
+        }
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" placeholder="Know it? Search for the title" [(ngModel)]="input" (input)="updateAutocomplete()" (focus)="autocompleteVisible = true" (blur)="createBlurListener()">
+        <svg xmlns="http://www.w3.org/2000/svg" (click)="clear()" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </div>
+      <div id="btnContainer">
+        <button (click)="skip()">SKIP</button>
+        <button (click)="submit()" [style.margin-left]="'auto'">SUBMIT</button>
+      </div>
+    }
+  </div>
+</div>
+<iframe id="iframe" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/293"></iframe>
