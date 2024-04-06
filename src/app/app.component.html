@@ -19,14 +19,16 @@
   @else {
     <div class="fit" [style.text-align]="'center'">
       <h1>The song was {{song?.title}}.</h1>
-      @if (tries === -1) {
-        <h3>You lost!</h3>
-      }
-      @else {
-        <h3>You got it in {{tries + 1}} tr{{tries + 1 === 1 ? "y" : "ies"}}.</h3>
-      }
-      <img src="{{imgUrl}}" class="reactionImage"><br /><br />
-      <button (click)="share()">Share</button>
+      <div [style.font-weight]="'bold'">
+        @if (tries === -1) {
+          You lost!
+        }
+        @else {
+          You got it in {{tries + 1}} tr{{tries + 1 === 1 ? "y" : "ies"}}.
+        }
+        <button (click)="share()" [style.margin-left.em]="1">Share</button>
+      </div> <br/>
+      <img src="{{imgUrl}}" class="reactionImage">
     </div>
   }
   <div id="footer">

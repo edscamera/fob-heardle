@@ -4,7 +4,7 @@
     font-size: xx-large;
     padding: 0.75rem;
 
-    border-bottom: 1px solid #888;
+    border-bottom: 1px solid var(--border-highlight);
 }
 
 #guesses {
@@ -22,9 +22,9 @@
 
         font-size: 1rem;
         font-family: "Josefin Sans", sans-serif;
-        border: 1px solid #444;
+        border: 1px solid var(--border);
     }
-    > div.active { border: 1px solid #888 }
+    > div.active { border: 1px solid var(--border-highlight) }
     gap: 0.5rem;
 }
 .fit { margin: 0 20vw; }
@@ -34,7 +34,9 @@
 
     width: 100vw;
 
-    border-top: 1px solid #888;
+    border-top: 1px solid var(--border-highlight);
+
+    background-color: var(--bg);
     
     #footerFit {
         display: flex;
@@ -44,16 +46,16 @@
         #btnContainer {
             display: flex;
             button:last-child {
-                background-color: #080;
+                background-color: var(--track);
             }
         }
     }
 }
 
 button {
-    background-color: #444;
+    background-color: var(--border);
     cursor: pointer;
-    color: #fff;
+    color: var(--text);
     font-family: "Josefin Sans", sans-serif;
     text-transform: uppercase;
     border: none;
@@ -83,9 +85,9 @@ button {
         padding: 0.75rem;
         padding-left: calc(1.5rem + 18px);
         background-color: rgba(0, 0, 0, 0);
-        color: #fff;
+        color: var(--text);
         font-family: "Josefin Sans", sans-serif;
-        border: 1px solid #888;
+        border: 1px solid var(--border-highlight);
     }
     #autocomplete {
         position: absolute;
@@ -97,12 +99,12 @@ button {
         width: stretch; 
         display: flex;
         flex-direction: column;
-        border: 1px solid #888;
+        border: 1px solid var(--border-highlight);
         border-bottom: none;
         > div {
             font-family: "Josefin Sans", sans-serif;
-            background-color: #121212;
-            color: #fff;
+            background-color: var(--bg);
+            color: var(--text);
             padding: 0.5rem;
             user-select: none;
             cursor: pointer;
@@ -122,11 +124,11 @@ button, input[type="text"] { border-radius: 2px; }
     button {
         margin: auto;
         border-radius: 100%;
-        border: 1px solid #fff;
+        border: 1px solid var(--text);
         width: 4em;
         height: 4em;
         background-color: rgba(0, 0, 0, 0);
-        color: #fff;
+        color: var(--text);
         cursor: pointer;
         letter-spacing: unset !important;
     }
@@ -134,10 +136,10 @@ button, input[type="text"] { border-radius: 2px; }
 
 #track-container {
     height: 1em;
-    border-bottom: 1px solid #888;
+    border-bottom: 1px solid var(--border-highlight);
     > div {
-        border-left: 1px solid #888;
-        border-right: 1px solid #888;
+        border-left: 1px solid var(--border-highlight);
+        border-right: 1px solid var(--border-highlight);
         height: 100%;
 
         position: relative;
@@ -148,13 +150,13 @@ button, input[type="text"] { border-radius: 2px; }
             height: 100%;
         }
         > div.behind {
-            background-color: #444;
+            background-color: var(--border);
         }
         > div#track {
-            background-color: #080;
+            background-color: var(--track);
         }
         > div.border {
-            border-right: 1px solid #888;
+            border-right: 1px solid var(--border-highlight);
         }
     }
 }
@@ -172,5 +174,5 @@ button, input[type="text"] { border-radius: 2px; }
 .reactionImage {
     max-width: 700px;
     width: 100%;
-    border: 2px solid #444;
+    border: 2px solid var(--border);
 }

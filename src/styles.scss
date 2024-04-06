@@ -1,9 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+:root {
+    --bg: #121212;
+    --text: #fff;
+    --border: #444;
+    --border-highlight: #888;
+    --track: #080;
+}
 body {
     margin: 0px;
-    background-color: #121212;
-    color: #fff;
+    background-color: var(--bg);
+    color: var(--text);
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
