@@ -227,25 +227,34 @@ export class AppComponent implements AfterViewInit {
     return song;
   }
 
-  public share(): void {
+  public getShareText(): string {
+    let text = `${this.artistName} Heardle #${this.gameDay + 1}\n`;
+    if (this.tries === -1) for(let i = 0; i < this.api.getMaxGuesses(); i++) text += "❌";
+      else {for(let i = 0; i < this.tries; i++) {
+        text += "❌";
+      }
+      text += "✅";
+    }
+    text += `\n\n${window.location.href}`;
+    return text;
+  }
+  public shareCopy(): void {
     if (!navigator || !navigator.clipboard) {
       alert("An error occurred while copying the text.");
       return;
     }
     try {
-      let text = `${this.artistName} Heardle #${this.gameDay + 1}\n`;
-      if (this.tries === -1) for(let i = 0; i < this.api.getMaxGuesses(); i++) text += "❌";
-        else {for(let i = 0; i < this.tries; i++) {
-          text += "❌";
-        }
-        text += "✅";
-      }
-      text += `\n\n${window.location.href}`;
-      navigator.clipboard.writeText(text);
+      navigator.clipboard.writeText(this.getShareText());
       alert("Text copied!");
     } catch (e) {
       alert("An error occurred while copying the text.");
       console.error(e);
     }
+  }
+  public shareX(): void {
+    const hashtag = `#${this.artistName.replace(/\s/g, "")}Heardle`;
+    const text = `${this.getShareText()} ${hashtag}`;
+    const url = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank", "noopener");
   }
 }

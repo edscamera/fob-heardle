@@ -176,3 +176,10 @@ button, input[type="text"] { border-radius: 2px; }
     width: 100%;
     border: 2px solid var(--border);
 }
+.share {
+    display: flex;
+    align-items: center;
+    gap: 0.75em;
+    font-weight: bold;
+    justify-content: center;
+}
