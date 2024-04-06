@@ -162,3 +162,15 @@ button, input[type="text"] { border-radius: 2px; }
 #iframe {
     visibility: hidden;
 }
+
+@media (max-width: 500px) {
+    .fit {
+        margin: 0 1rem;
+    }
+} 
+
+.reactionImage {
+    max-width: 700px;
+    width: 100%;
+    border: 2px solid #444;
+}
