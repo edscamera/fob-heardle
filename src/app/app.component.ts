@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AppService } from './app.service';
 import { Guess } from './models/Guess';
 import { Song } from './models/Song';
+import { Title } from '@angular/platform-browser';
 
 declare var SC: any;
 
@@ -22,7 +23,8 @@ export class AppComponent implements AfterViewInit {
   
   constructor (
     private api: AppService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private titleService: Title,
   ) { }
   public input: string = "";
 
@@ -61,6 +63,7 @@ export class AppComponent implements AfterViewInit {
     this.api.load(() => {
       this.guesses = new Array(this.api.getMaxGuesses());
       this.artistName = this.api.getArtistName();
+      this.titleService.setTitle(`${this.artistName} Heardle`);
       this.guessMap = this.api.getGuessMap();
 
       this.widget.bind("playProgress", (progress: any) => {
