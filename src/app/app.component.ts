@@ -26,6 +26,8 @@ export class AppComponent implements AfterViewInit {
   ) { }
   public input: string = "";
 
+  public loading: boolean = true;
+
   public guesses: Guess[] = [];
   public playing: boolean = false;
 
@@ -78,6 +80,8 @@ export class AppComponent implements AfterViewInit {
       this.song = this.getSongForDay(this.gameDay);
       this.widget.load(this.song.url);
       
+      window.setTimeout(() => this.loading = false, 500);
+
       this.localStorageKey = `heardle-${this.artistName.toLowerCase().replace(/\s/g, "")}`;
       this.checkWin();
     });
