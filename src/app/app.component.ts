@@ -41,10 +41,12 @@ export class AppComponent implements AfterViewInit {
   
   public localStorageKey: string | null = null;
 
-  public gameDay: number | null = null;
+  public gameDay: number = -1;
 
   public won = false;
   public tries = 0;
+
+  public imgUrl = "";
 
   public getEmoji(guess: Guess): string {
     if (guess.skipped) return "⏩";
@@ -72,9 +74,8 @@ export class AppComponent implements AfterViewInit {
         }
       });
 
-      const songList = this.api.getSongs();
-      this.song = songList[Math.floor(Math.random() * songList.length)];
       this.gameDay = Math.floor((new Date().getTime() - new Date(this.api.getStartDate()).getTime()) / 1000 / 60 / 60 / 24);
+      this.song = this.getSongForDay(this.gameDay);
       this.widget.load(this.song.url);
       
       this.localStorageKey = `heardle-${this.artistName.toLowerCase().replace(/\s/g, "")}`;
@@ -88,6 +89,13 @@ export class AppComponent implements AfterViewInit {
       guess: this.input,
       skipped: false,
     };
+    if (this.getCurrentGuess() === this.api.getMaxGuesses()) {
+      const scores = this.getData("scores") ?? {};
+      if (this.gameDay !== null) scores[this.gameDay] = -1;
+      this.setData("scores", scores);
+      this.checkWin();
+      return;
+    }
     if (this.input.toLowerCase().replace(/\s/g, "") === this.song?.title.toLowerCase().replace(/\s/g, "")) {
       const scores = this.getData("scores") ?? {};
       if (this.gameDay !== null) scores[this.gameDay] = this.getCurrentGuess() - 1;
@@ -102,6 +110,13 @@ export class AppComponent implements AfterViewInit {
       guess: null,
       skipped: true,
     };
+    if (this.getCurrentGuess() === this.api.getMaxGuesses()) {
+      const scores = this.getData("scores") ?? {};
+      if (this.gameDay !== null) scores[this.gameDay] = -1;
+      this.setData("scores", scores);
+      this.checkWin();
+      return;
+    }
   }
   public clear(): void {
     this.input = "";
@@ -147,10 +162,14 @@ export class AppComponent implements AfterViewInit {
 
   public checkWin(): void {
     const scores = this.getData("scores");
+    if (!scores) return;
     if (scores.hasOwnProperty(this.gameDay)) {
       this.won = true;
-      if (this.gameDay) this.tries = scores[this.gameDay];
+      this.tries = scores[this.gameDay.toString()];
     }
+    const imgMap = this.api.getImageMap();
+    const possibleImages = imgMap[this.tries === -1 ? imgMap.length - 1 : this.tries];
+    this.imgUrl = possibleImages[Math.floor(Math.random() * possibleImages.length)];
   }
 
   public setData(key: string, value: any): void {
@@ -177,6 +196,49 @@ export class AppComponent implements AfterViewInit {
       const data = JSON.parse(json ?? "{}") ?? {};
       delete data[key];
       localStorage.setItem(this.localStorageKey, JSON.stringify(data));
+    }
+  }
+
+  public getSongForDay(day: number): Song {
+    const seed = (day + 1) * 13;
+    const random = {
+      m: 0x80000000,
+      a: 1103515245,
+      c: 12345,
+      state: seed ? seed : Math.floor(Math.random() * (0x80000000 - 1)),
+      nextFloat: function() {
+        // Generate the next integer value
+        this.state = (this.a * this.state + this.c) % this.m;
+        
+        // Normalize the integer value to the range [0,1]
+        return this.state / this.m;
+      },
+    };
+
+    const songs = this.api.getSongs();
+    const song = songs[Math.floor(random.nextFloat() * songs.length)];
+    return song;
+  }
+
+  public share(): void {
+    if (!navigator || !navigator.clipboard) {
+      alert("An error occurred while copying the text.");
+      return;
+    }
+    try {
+      let text = `${this.artistName} Heardle #${this.gameDay + 1}\n`;
+      if (this.tries === -1) for(let i = 0; i < this.api.getMaxGuesses(); i++) text += "❌";
+        else {for(let i = 0; i < this.tries; i++) {
+          text += "❌";
+        }
+        text += "✅";
+      }
+      text += `\n\n${window.location.href}`;
+      navigator.clipboard.writeText(text);
+      alert("Text copied!");
+    } catch (e) {
+      alert("An error occurred while copying the text.");
+      console.error(e);
     }
   }
 }

@@ -43,21 +43,22 @@
         padding: 0.75rem 0;
         #btnContainer {
             display: flex;
-            button {
-                background-color: #444;
-                cursor: pointer;
-                color: #fff;
-                font-family: "Josefin Sans", sans-serif;
-                text-transform: uppercase;
-                border: none;
-                padding: .5rem;
-                letter-spacing: .2em;
-            }
             button:last-child {
                 background-color: #080;
             }
         }
     }
+}
+
+button {
+    background-color: #444;
+    cursor: pointer;
+    color: #fff;
+    font-family: "Josefin Sans", sans-serif;
+    text-transform: uppercase;
+    border: none;
+    padding: .5rem;
+    letter-spacing: .2em;
 }
 
 #inputContainer {
@@ -127,6 +128,7 @@ button, input[type="text"] { border-radius: 2px; }
         background-color: rgba(0, 0, 0, 0);
         color: #fff;
         cursor: pointer;
+        letter-spacing: unset !important;
     }
 }
 

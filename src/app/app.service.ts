@@ -53,5 +53,8 @@ export class AppService {
     if (!this.config) throw "Config not loaded yet!";
     return this.config?.songs;
   }
-
+  public getImageMap(): string[][] {
+    if (!this.config) throw "Config not loaded yet!";
+    return this.config?.imgMap;
+  } 
 }
